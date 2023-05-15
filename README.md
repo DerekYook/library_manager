@@ -3,6 +3,7 @@
 ## Index
 - [Overview](#overview)
 - [Getting Started](#getting-started)
+- [Documentation](#documentation)
 - [Testing](#testing)
 - [Authors](#authors)
 - [License](#license)
@@ -46,7 +47,10 @@
 6. 도서 검색
 - 도서 조회 항목은 책 제목, 저자, 출판사로 하며 기본 정렬은 오름차순으로 한다.
 - 도서 목록은 페이징 처리하며 페이징 갯수는 10개로 한다.
-
+    
+## Documentation
+[GoogleDrive](https://drive.google.com/drive/folders/1ADAvIToiEl6eJv-lHRXVnPVXkr9qCVKR?usp=sharing){: target="_blank"}
+    
 ## Testing
 Postman을 이용한 테스트 진행
 
