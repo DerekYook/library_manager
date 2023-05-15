@@ -49,7 +49,7 @@
 - 도서 목록은 페이징 처리하며 페이징 갯수는 10개로 한다.
     
 ## Documentation
-[GoogleDrive](https://drive.google.com/drive/folders/1ADAvIToiEl6eJv-lHRXVnPVXkr9qCVKR?usp=sharing){: target="_blank"}
+[GoogleDrive](https://drive.google.com/drive/folders/1ADAvIToiEl6eJv-lHRXVnPVXkr9qCVKR?usp=sharing){:target="_blank"}
     
 ## Testing
 Postman을 이용한 테스트 진행
