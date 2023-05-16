@@ -29,9 +29,14 @@ public class Member {
     private String phone;
 
     @Column(nullable = false, unique = true)
-    private Enum status;
+    private Status status = Status.Active;
 
     @Column(length = 50, nullable = false)
     private String libraryMember;
+
+    public enum Status {
+        Active,
+        Inactive;
+    }
 
 }
