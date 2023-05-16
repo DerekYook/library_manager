@@ -18,7 +18,7 @@
 - Service : REST API
 - Databese : H2
 - Additional Tool : Query DSL
-- DevTool : IntelliJ
+- DevTool : IntelliJ, 
 
 
 ## Getting Started
@@ -54,7 +54,7 @@
 <a href="https://drive.google.com/drive/folders/1ADAvIToiEl6eJv-lHRXVnPVXkr9qCVKR?usp=sharing" target="_blank">GoogleDrive</a>
     
 ## Testing
-Postman을 이용한 테스트 진행
+Postman과 Swagger를 이용한 테스트 진행 및 API 문서 작성
 
 ## Authors
 - [DerekYook](https://github.com/DerekYook) - KyungDeuk Yook (wowykd@gmail.com)
