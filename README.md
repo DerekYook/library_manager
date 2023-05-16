@@ -12,11 +12,13 @@
 이 프로젝트는 도서 대출 관리 API제작 프로젝트 입니다.
 
 ## Overview
-- 도서 관리용 프로젝트
-- Java, Sping
-- REST API
-- H2
-- Query DSL
+- Object : 도서 관리용 프로젝트
+- Language : Java 17
+- FrameWork : Sping Boot 2.7.11
+- Service : REST API
+- Databese : H2
+- Additional Tool : Query DSL
+- DevTool : IntelliJ
 
 
 ## Getting Started
