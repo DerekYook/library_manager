@@ -28,7 +28,7 @@ public class Member {
     @Column(length = 15, nullable = false, unique = true)
     private String phone;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private Status status = Status.Active;
 
     @Column(length = 50, nullable = false)
