@@ -9,7 +9,7 @@ import lombok.Getter;
 public class MemberDto {
     @Getter
     @AllArgsConstructor
-    public static class post{
+    public static class Post{
         @NotBlank
         @Email(message = "이메일 형식에 맞게 작성해주세요.")
         private String email;
