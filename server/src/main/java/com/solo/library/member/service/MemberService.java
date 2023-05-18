@@ -21,23 +21,28 @@ public class MemberService {
         this.memberMapper = memberMapper;
     }
 
-    public Member createMember(MemberDto.Post requestBody){
-        //내용채우기
-        verifyExistMember(requestBody);
-        Member member = new Member();
-        member.setNickName(requestBody.getNickName());
-        member.setEmail(requestBody.getEmail());
-        member.setPhone(requestBody.getPhone());
-        member.setMemberStatus(member.getMemberStatus());
-        member.setLibraryMember(requestBody.getLibraryMember());
+    public Member createMember(Member member){
+        verifyExistMember(member.getNickName(), member.getPhone());
         return memberRepository.save(member);
     }
 
-    public void verifyExistMember(MemberDto.Post requestBody){
-        Optional<Member> member = memberRepository.verifyMember(requestBody.getNickName(),
-                requestBody.getPhone());
+    public void verifyExistMember(String nickName, String phone){
+        Optional<Member> member = memberRepository.verifyMember(nickName, phone);
         if(member.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+    }
+
+    public void deleteMember(long memberId){
+        Member findMember = findVerifiedMember(memberId);
+
+        memberRepository.delete(findMember);
+    }
+
+    public Member findVerifiedMember(long memberId){
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        Member findMember = optionalMember.orElseThrow(()->
+                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        return findMember;
     }
 
 }
