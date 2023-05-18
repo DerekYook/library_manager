@@ -1,5 +1,7 @@
 package com.solo.library.member.service;
 
+import com.solo.library.exception.BusinessLogicException;
+import com.solo.library.exception.ExceptionCode;
 import com.solo.library.member.dto.MemberDto;
 import com.solo.library.member.entitiy.Member;
 import com.solo.library.member.mapper.MemberMapper;
@@ -21,14 +23,21 @@ public class MemberService {
 
     public Member createMember(MemberDto.Post requestBody){
         //내용채우기
+        verifyExistMember(requestBody);
         Member member = new Member();
         member.setNickName(requestBody.getNickName());
         member.setEmail(requestBody.getEmail());
         member.setPhone(requestBody.getPhone());
-        member.setStatus(member.getStatus());
+        member.setMemberStatus(member.getMemberStatus());
         member.setLibraryMember(requestBody.getLibraryMember());
         return memberRepository.save(member);
     }
 
+    public void verifyExistMember(MemberDto.Post requestBody){
+        Optional<Member> member = memberRepository.verifyMember(requestBody.getNickName(),
+                requestBody.getPhone());
+        if(member.isPresent())
+            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+    }
 
 }
