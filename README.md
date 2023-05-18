@@ -13,11 +13,11 @@
 
 ## Overview
 - Object : 도서 관리용 프로젝트
-- Language : Java 17
+- Language : Java 11
 - FrameWork : Sping Boot 2.7.11
 - Service : REST API
 - Databese : H2
-- Additional Tool : Query DSL
+- Additional Tool : Query DSL 5.0.0
 - DevTool : IntelliJ, 
 
 
