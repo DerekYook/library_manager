@@ -5,10 +5,13 @@ import com.solo.library.member.entitiy.Member;
 import com.solo.library.member.mapper.MemberMapper;
 import com.solo.library.member.service.MemberService;
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,10 +33,15 @@ public class MemberController {
 
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody){
-        //Member member = memberMapper.memberPostDtoToMember(requestBody);
-        Member member = memberService.createMember(requestBody);
+        Member member = memberService.createMember(memberMapper.memberPostDtoToMember(requestBody));
 
         return new ResponseEntity<>(member, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{member-id}")
+    public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long memberId){
+        memberService.deleteMember(memberId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
