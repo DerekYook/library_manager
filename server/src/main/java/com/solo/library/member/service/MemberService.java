@@ -7,12 +7,16 @@ import com.solo.library.member.entitiy.Member;
 import com.solo.library.member.mapper.MemberMapper;
 import com.solo.library.member.repository.MemberRepository;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Service
 public class MemberService {
+
     private final MemberRepository memberRepository;
     private final MemberMapper memberMapper;
 
@@ -21,28 +25,34 @@ public class MemberService {
         this.memberMapper = memberMapper;
     }
 
-    public Member createMember(Member member){
+    public Member createMember(Member member) {
         verifyExistMember(member.getNickName(), member.getPhone());
-        return memberRepository.save(member);
+        Member savedMember = memberRepository.save(member);
+        return savedMember;
     }
 
-    public void verifyExistMember(String nickName, String phone){
+    public void verifyExistMember(String nickName, String phone) {
         Optional<Member> member = memberRepository.verifyMember(nickName, phone);
-        if(member.isPresent())
+        if (member.isPresent()) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+        }
     }
 
-    public void deleteMember(long memberId){
+    public void deleteMember(long memberId) {
         Member findMember = findVerifiedMember(memberId);
 
         memberRepository.delete(findMember);
     }
 
-    public Member findVerifiedMember(long memberId){
+    public Member findVerifiedMember(long memberId) {
         Optional<Member> optionalMember = memberRepository.findById(memberId);
-        Member findMember = optionalMember.orElseThrow(()->
+        Member findMember = optionalMember.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         return findMember;
+    }
+
+    public Page<Member> findMembers(int page, int size){
+        return memberRepository.findAll(PageRequest.of(page, size, Sort.by("nickName").descending()));
     }
 
 }
