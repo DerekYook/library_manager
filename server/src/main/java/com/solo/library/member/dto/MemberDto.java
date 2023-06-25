@@ -72,6 +72,7 @@ public class MemberDto {
         public MultiResponseDto(List<T> data, Page page) {
             this.data = data;
             this.pageInfo = new PageInfo(page.getNumber() + 1, page.getSize(),
+//            this.pageInfo = new PageInfo(page.getNumber() + 1, 10,
                     page.getTotalElements(),
                     page.getTotalPages());
         }
@@ -80,7 +81,6 @@ public class MemberDto {
     @Getter
     @AllArgsConstructor
     public static class PageInfo {
-
         private int page;
         private int size;
         private long totalElements;
