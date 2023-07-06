@@ -13,8 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 public interface MemberMapper {
     @Autowired
     Member memberPostDtoToMember(MemberDto.Post requestBody);
-    //MemberDto.SingleResponseDto memberResponseDtoToMember(Member member);
-    Member memberResponseDtoToMember(Member member);
+    MemberDto.Response memberResponseDtoToMember(Member member);
+    //Member memberResponseDtoToMember(Member member);
     @Autowired
-    List<MemberDto.MultiResponseDto> membersResponseDtoToMembers(List<Member> members);
+    List<MemberDto.Response> membersResponseDtoToMembers(List<Member> members);
+
 }
