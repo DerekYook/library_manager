@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 
 public class MemberDto {
@@ -33,7 +34,8 @@ public class MemberDto {
     }
 
     @Getter
-    @AllArgsConstructor
+    //@AllArgsConstructor
+    //@RequiredArgsConstructor
     public static class Response {
 
         private long memberId;
@@ -43,24 +45,25 @@ public class MemberDto {
         private String libraryMember;
         private Member.MemberStatus memberStatus;
 
-        public long getMemberId() {
-            return memberId;
-        }
-
-        public MemberStatus getMemberStatus() {
-            return memberStatus;
+        public Response(long memberId, String email, String nickName, String phone,
+                String libraryMember,
+                MemberStatus memberStatus) {
+            this.memberId = memberId;
+            this.email = email;
+            this.nickName = nickName;
+            this.phone = phone;
+            this.libraryMember = libraryMember;
+            this.memberStatus = memberStatus;
         }
     }
 
 
     @Getter
+    @AllArgsConstructor
     public static class SingleResponseDto<T> {
 
         private T data;
 
-        public SingleResponseDto(T data) {
-            this.data = data;
-        }
     }
 
     @Getter
@@ -72,6 +75,7 @@ public class MemberDto {
         public MultiResponseDto(List<T> data, Page page) {
             this.data = data;
             this.pageInfo = new PageInfo(page.getNumber() + 1, page.getSize(),
+//            this.pageInfo = new PageInfo(page.getNumber() + 1, 10,
                     page.getTotalElements(),
                     page.getTotalPages());
         }
@@ -80,7 +84,6 @@ public class MemberDto {
     @Getter
     @AllArgsConstructor
     public static class PageInfo {
-
         private int page;
         private int size;
         private long totalElements;

@@ -52,7 +52,8 @@ public class MemberService {
     }
 
     public Page<Member> findMembers(int page, int size){
-        return memberRepository.findAll(PageRequest.of(page, size, Sort.by("nickName").descending()));
+//        return memberRepository.findAll(PageRequest.of(page, size, Sort.by("nickName").descending()));
+        return memberRepository.findAll(PageRequest.of(page, size));
     }
 
 }
