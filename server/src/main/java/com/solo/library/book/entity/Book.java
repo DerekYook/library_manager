@@ -35,7 +35,7 @@ public class Book {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private BookStatus status = BookStatus.Returned;
+    private BookStatus bookStatus = BookStatus.Returned;
 
     public enum BookStatus{
         Returned("도서 대출 가능"),
