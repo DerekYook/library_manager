@@ -5,5 +5,5 @@ import java.util.Optional;
 
 public interface MemberCustomRepository {
 
-    Optional<Member> verifyMember(String nickName, String phone);
+    Optional<Member> verifyMember(String nickName, String phone, String libraryMember);
 }

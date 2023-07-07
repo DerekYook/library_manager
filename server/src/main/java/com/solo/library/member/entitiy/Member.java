@@ -1,13 +1,10 @@
 package com.solo.library.member.entitiy;
 
-import com.solo.library.exception.BusinessLogicException;
-import com.solo.library.exception.ExceptionCode;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,7 +19,7 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long memberId;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String email;
 
     @Column(length = 10, nullable = false, updatable = false)

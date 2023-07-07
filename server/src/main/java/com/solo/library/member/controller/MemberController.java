@@ -42,7 +42,8 @@ public class MemberController {
         Member createdMember = memberService.createMember(member);
 
 //        return new ResponseEntity<>(new MemberDto.SingleResponseDto<>(memberMapper.memberResponseDtoToMember(createdMember)), HttpStatus.OK);
-        return new ResponseEntity<>(memberMapper.memberResponseDtoToMember(createdMember), HttpStatus.CREATED);
+        return new ResponseEntity<>(memberMapper.memberResponseDtoToMember(createdMember),
+                HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{member-id}")
@@ -52,11 +53,13 @@ public class MemberController {
     }
 
     @GetMapping
-    public ResponseEntity getMembers(@Positive @RequestParam int page){
+    public ResponseEntity getMembers(@Positive @RequestParam int page) {
 //            , @Positive @RequestParam int size) {
-        Page<Member> pageMembers = memberService.findMembers(page-1,10);
+        Page<Member> pageMembers = memberService.findMembers(page - 1, 10);
         List<Member> members = pageMembers.getContent();
-        return new ResponseEntity<>( new MemberDto.MultiResponseDto<>(memberMapper.membersResponseDtoToMembers(members), pageMembers), HttpStatus.OK);
+        return new ResponseEntity<>(
+                new MemberDto.MultiResponseDto<>(memberMapper.membersResponseDtoToMembers(members),
+                        pageMembers), HttpStatus.OK);
     }
 
 }

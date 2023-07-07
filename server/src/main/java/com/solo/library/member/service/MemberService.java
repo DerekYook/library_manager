@@ -2,7 +2,6 @@ package com.solo.library.member.service;
 
 import com.solo.library.exception.BusinessLogicException;
 import com.solo.library.exception.ExceptionCode;
-import com.solo.library.member.dto.MemberDto;
 import com.solo.library.member.entitiy.Member;
 import com.solo.library.member.mapper.MemberMapper;
 import com.solo.library.member.repository.MemberRepository;
@@ -26,13 +25,13 @@ public class MemberService {
     }
 
     public Member createMember(Member member) {
-        verifyExistMember(member.getNickName(), member.getPhone());
+        verifyExistMember(member.getNickName(), member.getPhone(), member.getLibraryMember());
         Member savedMember = memberRepository.save(member);
         return savedMember;
     }
 
-    public void verifyExistMember(String nickName, String phone) {
-        Optional<Member> member = memberRepository.verifyMember(nickName, phone);
+    public void verifyExistMember(String nickName, String phone, String libraryMember) {
+        Optional<Member> member = memberRepository.verifyMember(nickName, phone, libraryMember);
         if (member.isPresent()) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
         }
@@ -51,9 +50,10 @@ public class MemberService {
         return findMember;
     }
 
-    public Page<Member> findMembers(int page, int size){
-//        return memberRepository.findAll(PageRequest.of(page, size, Sort.by("nickName").descending()));
-        return memberRepository.findAll(PageRequest.of(page, size));
+    public Page<Member> findMembers(int page, int size) {
+        return memberRepository.findAll(
+                PageRequest.of(page, size, Sort.by("nickName").descending()));
+//        return memberRepository.findAll(PageRequest.of(page, size));
     }
 
 }
