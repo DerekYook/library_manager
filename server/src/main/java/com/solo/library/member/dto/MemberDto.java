@@ -8,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 
 public class MemberDto {
@@ -84,6 +83,7 @@ public class MemberDto {
     @Getter
     @AllArgsConstructor
     public static class PageInfo {
+
         private int page;
         private int size;
         private long totalElements;
