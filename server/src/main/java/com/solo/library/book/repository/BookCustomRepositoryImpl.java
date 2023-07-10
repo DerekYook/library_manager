@@ -1,24 +1,21 @@
 package com.solo.library.book.repository;
 
 import static com.solo.library.book.entity.QBook.book;
-import static org.springframework.util.StringUtils.hasText;
 
 import com.querydsl.core.QueryResults;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.solo.library.book.dto.BookSearchCondition;
 import com.solo.library.book.entity.Book;
-import com.solo.library.book.entity.QBook;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BookCustomRepositoryImpl implements BookCustomRepository{
+public class BookCustomRepositoryImpl implements BookCustomRepository {
+
     private final JPAQueryFactory jpaQueryFactory;
 
     public BookCustomRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
@@ -26,7 +23,7 @@ public class BookCustomRepositoryImpl implements BookCustomRepository{
     }
 
     @Override
-    public Optional<Book> verifyBook(){
+    public Optional<Book> verifyBook() {
         return null;
     }
 
@@ -51,20 +48,15 @@ public class BookCustomRepositoryImpl implements BookCustomRepository{
 //    }
 
     @Override
-    public Page<Book> searchBooks(SearchCondition condition, Pageable pageable){
-        List<Book> books = jpaQueryFactory.selectFrom(book).where(titleEq(condition.getTitle()), writerEq(condition.getWriter()), publisherEq(condition.getPublisher())).offset(
-                pageable.getOffset()).limit(pageable.getPageSize()).fetch();
-        JPAQuery<Book> countQuery = jpaQueryFactory.selectFrom(book).where(titleEq(condition.getTitle()), writerEq(condition.getWriter()), publisherEq(condition.getPublisher()));
-        return PageableExecutionUtils.getPage(books, pageable, () -> countQuery.fetchCount());
-    }
+    public Page<Book> searchBooks(BookSearchCondition condition, Pageable pageable){
+        QueryResults<Book> results = jpaQueryFactory.selectFrom(book).where(book.title.contains(
+                condition.getTitle()), book.writer.contains(condition.getWriter()), book.publisher.contains(
+                condition.getPublisher())).offset(
+                pageable.getOffset()).limit(pageable.getPageSize()).fetchResults();
 
-    private BooleanExpression titleEq(String title){
-        return hasText(title) ? book.title.eq(title) : null;
-    }
-    private BooleanExpression writerEq(String writer){
-        return hasText(writer) ? book.writer.eq(writer) : null;
-    }
-    private BooleanExpression publisherEq(String publisher){
-        return hasText(publisher) ? book.publisher.eq(publisher) : null;
+        List<Book> content = results.getResults();
+        long total = results.getTotal();
+
+        return new PageImpl<>(content, pageable, total);
     }
 }

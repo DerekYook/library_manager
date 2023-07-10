@@ -25,7 +25,10 @@ public class BookService {
         return bookRepository.findAll(PageRequest.of(page, size, Sort.by("title", "writer", "publisher").descending()));
     }
 
-    public List<Book> searchBooks(int page, int size, String title, String writer, String publisher){
-        return bookRepository.searchBooks(page, size, title, writer, publisher);
-    }
+//    public List<Book> searchBooks(int page, int size, String title, String writer, String publisher){
+//        return bookRepository.searchBooks(page, size, title, writer, publisher);
+//    }
+//    public Page<Book> searchBooks(String title, String writer, String publisher){
+//        return bookRepository.searchBooks(title, writer, publisher);
+//    }
 }
