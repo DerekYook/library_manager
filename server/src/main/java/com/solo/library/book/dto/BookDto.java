@@ -3,6 +3,7 @@ package com.solo.library.book.dto;
 import com.solo.library.book.entity.Book;
 import com.solo.library.book.entity.Book.BookStatus;
 import java.util.List;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
@@ -20,8 +21,7 @@ public class BookDto {
         private Book.BookStatus bookStatus;
 
         public Response(long bookId, String title, String writer, String publisher,
-                String libraryBook,
-                BookStatus bookStatus) {
+                String libraryBook, BookStatus bookStatus) {
             this.bookId = bookId;
             this.title = title;
             this.writer = writer;
@@ -32,7 +32,7 @@ public class BookDto {
     }
 
     @Getter
-    @AllArgsConstructor
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class SingleResponseDto<T> {
 
         private T data;
@@ -54,7 +54,7 @@ public class BookDto {
     }
 
     @Getter
-    @AllArgsConstructor
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class PageInfo {
 
         private int page;
@@ -62,4 +62,17 @@ public class BookDto {
         private long totalElements;
         private int totalPages;
     }
+
+//    @Getter
+//    public static class Search{
+//        private String title;
+//        private String writer;
+//        private String publisher;
+//
+//        public Search(String title, String writer, String publisher) {
+//            this.title = title;
+//            this.writer = writer;
+//            this.publisher = publisher;
+//        }
+//    }
 }
