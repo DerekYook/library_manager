@@ -5,7 +5,6 @@ import static com.solo.library.book.entity.QBook.book;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.solo.library.book.dto.BookDto;
 import com.solo.library.book.entity.Book;
 import java.util.List;
 import java.util.Optional;
@@ -48,28 +47,36 @@ public class BookCustomRepositoryImpl implements BookCustomRepository {
 //        return bookList;
 //    }
 
-//    @Override
-//    public List<Book> searchBooks(BookDto.Search search){
-//        return jpaQueryFactory.selectFrom(book).where(orCon(search.getTitle(), search.getWriter(),
-//                search.getPublisher())).fetch();
-//    }
-//    private BooleanExpression titleCon(String titleCond){
-//        return titleCond != null ? book.title.contains(titleCond) : null;
-//    }
-//    private BooleanExpression writerCon(String writerCond){
-//        return writerCond != null ? book.title.contains(writerCond) : null;
-//    }
-//    private BooleanExpression publisherCon(String publisherCond){
-//        return publisherCond != null ? book.title.contains(publisherCond) : null;
-//    }
-//    private BooleanExpression orCon(String titleCond, String writerCond, String publisherCond){
-//        return titleCon(titleCond).or(writerCon(writerCond)).or(publisherCon(publisherCond));
-//    }
     @Override
-    public Page<Book> searchTitle(Pageable pageable, String title){
-        List<Book> content = jpaQueryFactory.selectFrom(book).where(book.title.contains(title)).offset(
-                pageable.getOffset()).limit(pageable.getPageSize()).fetch();
-        JPAQuery<Long> countQuery = jpaQueryFactory.select(book.count()).from(book).where(book.title.contains(title));
+    public Page<Book> searchBooks(Pageable pageable, String title, String writer,
+            String publisher) {
+        List<Book> content = jpaQueryFactory.selectFrom(book).where(orCon(title, writer, publisher))
+                .fetch();
+        JPAQuery<Long> countQuery = jpaQueryFactory.select(book.count()).from(book)
+                .where(orCon(title, writer, publisher));
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
+
+    private BooleanExpression titleCon(String titleCond) {
+        return titleCond != null ? book.title.contains(titleCond) : null;
+    }
+
+    private BooleanExpression writerCon(String writerCond) {
+        return writerCond != null ? book.writer.contains(writerCond) : null;
+    }
+
+    private BooleanExpression publisherCon(String publisherCond) {
+        return publisherCond != null ? book.publisher.contains(publisherCond) : null;
+    }
+
+    private BooleanExpression orCon(String titleCond, String writerCond, String publisherCond) {
+        return titleCon(titleCond).or(writerCon(writerCond)).or(publisherCon(publisherCond));
+    }
+//    @Override
+//    public Page<Book> searchTitle(Pageable pageable, String title){
+//        List<Book> content = jpaQueryFactory.selectFrom(book).where(book.title.contains(title)).offset(
+//                pageable.getOffset()).limit(pageable.getPageSize()).fetch();
+//        JPAQuery<Long> countQuery = jpaQueryFactory.select(book.count()).from(book).where(book.title.contains(title));
+//        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
+//    }
 }

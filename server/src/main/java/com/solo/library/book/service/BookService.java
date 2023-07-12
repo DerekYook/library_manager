@@ -1,10 +1,8 @@
 package com.solo.library.book.service;
 
-import com.solo.library.book.dto.BookDto;
 import com.solo.library.book.entity.Book;
 import com.solo.library.book.mapper.BookMapper;
 import com.solo.library.book.repository.BookRepository;
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -14,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Service
 public class BookService {
+
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
 
@@ -22,20 +21,18 @@ public class BookService {
         this.bookMapper = bookMapper;
     }
 
-    public Page<Book> findBooks(int page, int size){
-        return bookRepository.findAll(PageRequest.of(page, size, Sort.by("title", "writer", "publisher").descending()));
+    public Page<Book> findBooks(int page, int size) {
+        return bookRepository.findAll(
+                PageRequest.of(page, size, Sort.by("title", "writer", "publisher").descending()));
     }
 
-//    public List<Book> searchBooks(int page, int size, String title, String writer, String publisher){
-//        return bookRepository.searchBooks(page, size, title, writer, publisher);
-//    }
-//    public Page<Book> searchBooks(String title, String writer, String publisher){
-//        return bookRepository.searchBooks(title, writer, publisher);
-//    }
-//    public List<Book> searchBooks(BookDto.Search search){
-//        return bookRepository.searchBooks(search);
-//    }
-    public Page<Book> searchTitle(int page, int size, String title){
-        return bookRepository.searchTitle(PageRequest.of(page, size, Sort.by("title", "writer", "publisher").descending()), title);
+    public Page<Book> searchBooks(int page, int size, String title, String writer,
+            String publisher) {
+        return bookRepository.searchBooks(
+                PageRequest.of(page, size, Sort.by("title", "writer", "publisher").descending()),
+                title, writer, publisher);
     }
+//    public Page<Book> searchTitle(int page, int size, String title){
+//        return bookRepository.searchTitle(PageRequest.of(page, size, Sort.by("title", "writer", "publisher").descending()), title);
+//    }
 }
